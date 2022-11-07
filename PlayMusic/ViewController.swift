@@ -18,52 +18,21 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    @IBAction func keyCPressed(_ sender: UIButton) {
-        playSound(soundName: "C")
-    }
-    
-    @IBAction func keyDPressed(_ sender: UIButton) {
-        playSound(soundName: "D")
-    }
-    
-    
-    @IBAction func keyEPressed(_ sender: UIButton) {
-        playSound(soundName: "E")
-    }
-    
-    
-    @IBAction func keyFPressed(_ sender: UIButton) {
-        playSound(soundName: "F")
-    }
-    
-    
-    @IBAction func keyGPressed(_ sender: UIButton) {
-        playSound(soundName: "G")
-    }
-    
-    
-    @IBAction func keyAPressed(_ sender: UIButton) {
-        playSound(soundName: "A")
-    }
-    
-    
-    @IBAction func keyBPressed(_ sender: UIButton) {
-        playSound(soundName: "B")
+    @IBAction func keyPressed(_ sender: UIButton ) {
+        playSound(soundName: sender.currentTitle!)
+        
+        sender.alpha = 0.5
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            sender.alpha = 1
+        }
     }
     
     func playSound(soundName: String) {
-        guard let path = Bundle.main.path(forResource: soundName, ofType:"wav") else {
-            return
-        }
-        
-        let url = URL(fileURLWithPath: path)
-
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.play()
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        let path = Bundle.main.path(forResource: soundName, ofType:"wav")
+        let url = URL(fileURLWithPath: path!)
+        player = try! AVAudioPlayer(contentsOf: url);
+        player?.play()
     }
     
 }
